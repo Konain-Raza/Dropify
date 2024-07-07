@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import heroimg from '../../assets/Images/Hero-img.png';
+import heroimg from '../../assets/Images/HeroImg.svg';
 import pdf from '../../assets/Images/pdf.png';
 import ai from '../../assets/Images/ai.png';
 import jpg from '../../assets/Images/jpg.png';
@@ -292,30 +292,30 @@ const Hero = () => {
     uploadFile();
     fetchRoomData();
   }, [file, fileMetadata, roomId]);
-  const downloadFile = (url, filename) => {
-    fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        // Create a temporary URL for the Blob
-        const blobUrl = window.URL.createObjectURL(blob);
-
-        // Create a temporary <a> element and trigger the download
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = filename || 'download'; // Set default filename if not provided
-        document.body.appendChild(a);
-        a.click();
-
-        // Clean up: remove the temporary <a> and revoke the Blob URL
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(blobUrl);
-      })
-      .catch((error) => {
-        console.error('Error downloading file:', error);
-        // Handle any errors here
-      });
+  const handleDownload = async (url, filename) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Network response was not ok');
+  
+      const blob = await response.blob();
+      const urlObject = window.URL.createObjectURL(blob);
+  
+      let a = document.getElementById('download-link') || document.createElement('a');
+      a.id = 'download-link';
+      a.href = urlObject;
+      a.download = filename;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      
+      a.click();
+      window.URL.revokeObjectURL(urlObject);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
   };
-
+  
+  
   return (
     <div
       id="hero"
@@ -484,8 +484,12 @@ const Hero = () => {
                   />
                   <h5 className="filename">{file.fileName.split('[$]')[0]}</h5>
                   <a
-                    className="download-btn"
-                    onClick={() => downloadFile(file.url, file.filename)}
+                  className="download-btn"
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleDownload(file.url, file.fileName.split('[$]')[0]);
+                  }}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
