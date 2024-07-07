@@ -1,0 +1,33 @@
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp();
+
+const firestore = admin.firestore();
+
+exports.scheduleFileDeletion = functions.pubsub.schedule('every 12 hours').onRun(async (context) => {
+  const currentTime = new Date();
+  const thresholdTime = new Date(currentTime.getTime() - 12 * 60 * 60 * 1000);
+
+  const querySnapshot = await firestore.collection('Files').where('createdAt', '<=', thresholdTime).get();
+
+  const batch = firestore.batch();
+  querySnapshot.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+
+  await batch.commit();
+
+  console.log(`Scheduled deletion for files created before ${thresholdTime}`);
+
+  return null;
+});
+/**
+ * Import function triggers from their respective submodules:
+ *
+ * const {onCall} = require("firebase-functions/v2/https");
+ * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
+ *
+ * See a full list of supported triggers at https://firebase.google.com/docs/functions
+ */
+
+ZZz
