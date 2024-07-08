@@ -27,6 +27,8 @@ import rb from '../../assets/Images/rb.png';
 import defaultfile from '../../assets/Images/file.png';
 
 import './Hero.css';
+import { arrayRemove } from 'firebase/firestore';
+import { deleteObject } from 'firebase/storage';
 import {
   storage,
   ref,
@@ -55,7 +57,7 @@ const Hero = () => {
     docx,
     xlsx,
     txt,
-    illustrator:ai,
+    illustrator: ai,
     zip,
     gif,
     svg,
@@ -195,6 +197,22 @@ const Hero = () => {
       toast.error('You need to join a room to upload files.');
     }
   };
+  const handleDelete = async (roomId, file) => {
+    try {
+      const storageRef = ref(storage, file.url);
+      await deleteObject(storageRef);
+
+      const roomDocRef = doc(db, 'Rooms', roomId);
+
+      await updateDoc(roomDocRef, {
+        files: arrayRemove(file),
+      });
+      setFiles((prevFiles) => prevFiles.filter((f) => f.url !== file.url));
+      toast.success("File Deleted Successfully.")
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const handleLeaveRoom = () => {
     document.cookie = 'roomId=;';
@@ -296,17 +314,18 @@ const Hero = () => {
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error('Network response was not ok');
-  
+
       const blob = await response.blob();
       const urlObject = window.URL.createObjectURL(blob);
-  
-      let a = document.getElementById('download-link') || document.createElement('a');
+
+      let a =
+        document.getElementById('download-link') || document.createElement('a');
       a.id = 'download-link';
       a.href = urlObject;
       a.download = filename;
       a.style.display = 'none';
       document.body.appendChild(a);
-      
+
       a.click();
       window.URL.revokeObjectURL(urlObject);
       document.body.removeChild(a);
@@ -314,8 +333,7 @@ const Hero = () => {
       console.error('Error downloading file:', error);
     }
   };
-  
-  
+
   return (
     <div
       id="hero"
@@ -373,7 +391,6 @@ const Hero = () => {
                 </button>
 
                 <button
-           
                   className="copy"
                   onClick={() => {
                     if (roomId) {
@@ -484,12 +501,12 @@ const Hero = () => {
                   />
                   <h5 className="filename">{file.fileName.split('[$]')[0]}</h5>
                   <a
-                  className="download-btn"
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleDownload(file.url, file.fileName.split('[$]')[0]);
-                  }}
+                    className="download-btn"
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleDownload(file.url, file.fileName.split('[$]')[0]);
+                    }}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -501,6 +518,12 @@ const Hero = () => {
                     </svg>
                     <span className="icon2"></span>
                   </a>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(roomId, file)}
+                  >
+                    Delete
+                  </button>
                 </div>
               ))}
           </div>
