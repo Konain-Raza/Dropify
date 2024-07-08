@@ -24,6 +24,9 @@ import c from '../../assets/Images/c.png';
 import cpp from '../../assets/Images/cpp.png';
 import py from '../../assets/Images/py.png';
 import rb from '../../assets/Images/rb.png';
+import done from '../../assets/Images/done.png';
+import upload from '../../assets/Images/upload.png';
+
 import defaultfile from '../../assets/Images/file.png';
 
 import './Hero.css';
@@ -143,16 +146,21 @@ const Hero = () => {
   };
 
   const generateRandomId = () => {
-    const uuid = uuidv4().toUpperCase().replace(/-/g, '').substring(0, 9);
-    return `${uuid.substr(0, 3)}-${uuid.substr(3, 3)}-${uuid.substr(6)}`;
+    const uuid = uuidv4().toUpperCase().replace(/-/g, '');
+    return `${uuid.slice(0, 3)}-${uuid.slice(3, 6)}-${uuid.slice(6, 9)}`;
   };
 
   const generateFileName = (originalFileName) => {
-    const fileNameWithoutExtension = originalFileName.split('.')[0];
-    const extension = originalFileName.split('.').slice(1).join('.');
-    return `${fileNameWithoutExtension}[$]${Math.floor(
-      Math.random() * 10000
-    )}.${extension}`;
+    const randomId = generateRandomId();
+    const extension = originalFileName.split('.').pop();
+    const fileNameWithoutExtension = originalFileName
+      .split('.')
+      .slice(0, -1)
+      .join('.');
+
+    const uniqueFileName = `${fileNameWithoutExtension}[$]${randomId}.${extension}`;
+
+    return uniqueFileName;
   };
 
   const createRoom = async () => {
@@ -192,9 +200,11 @@ const Hero = () => {
         setFileMetadata(newFileMetadata);
       } else {
         toast.error('File size exceeds 3 MB or no file selected.');
+        setFile(null);
       }
     } else {
       toast.error('You need to join a room to upload files.');
+      setFile(null);
     }
   };
   const handleDelete = async (roomId, file) => {
@@ -208,7 +218,7 @@ const Hero = () => {
         files: arrayRemove(file),
       });
       setFiles((prevFiles) => prevFiles.filter((f) => f.url !== file.url));
-      toast.success("File Deleted Successfully.")
+      toast.success('File Deleted Successfully.');
     } catch (error) {
       toast.error(error.message);
     }
@@ -268,6 +278,8 @@ const Hero = () => {
             (error) => {
               console.error('Error uploading file:', error);
               toast.error('Error uploading file: ' + error.message);
+              setFile(null);
+              setFileMetadata(null);
             },
             () => {
               getDownloadURL(uploadTask.snapshot.ref)
@@ -281,13 +293,16 @@ const Hero = () => {
 
                   updateDoc(docRef, { files: arrayUnion(updatedFileMetadata) })
                     .then(() => {
-                      console.log(
-                        'Document successfully updated with file metadata!'
-                      );
+                      toast.success('File Uploaded successfully');
+                      setFile(null);
                       setFiles((prevFiles) => [
                         ...prevFiles,
                         updatedFileMetadata,
                       ]);
+                      document.getElementById(
+                        'progress-wrapper'
+                      ).style.display = 'none';
+                      document.getElementById("progress-bar-content").style.height= "100%"
                     })
                     .catch((error) => {
                       console.error('Error updating document: ', error);
@@ -336,17 +351,33 @@ const Hero = () => {
 
   return (
     <div
-      id="hero"
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => {
-        e.preventDefault();
-        if (roomId) {
-          handleFile(e.dataTransfer.files[0]);
-        } else {
-          toast.error('You must join a room to drop files.');
-        }
-      }}
-    >
+    id="hero"
+    onDragOver={(e) => {
+      e.preventDefault();
+      // Check if the dragged item is a file of specific type (e.g., PDF)
+      if (e.dataTransfer.types.includes('Files')) {
+        document.getElementById("droparea").style.border = "2px dashed blue";
+      } else {
+        document.getElementById("droparea").style.border = "2px dashed #ccc";
+      }
+    }}
+    onDragLeave={(e) => {
+      e.preventDefault();
+      document.getElementById("droparea").style.border = "2px dashed #ccc";
+    }}
+    onDrop={(e) => {
+      e.preventDefault();
+      document.getElementById("droparea").style.border = "2px dashed #ccc";
+  
+      if (roomId) {
+        handleFile(e.dataTransfer.files[0]);
+      } else {
+        toast.error('You must join a room to drop files.');
+      }
+    }}
+  >
+  
+       <div id="drop-zone-overlay"></div>
       <div id="hero-left">
         <div id="hero-content">
           <h1>Dropify</h1>
@@ -462,9 +493,9 @@ const Hero = () => {
                   }
                 }}
               />
+              <img src={upload} alt="" id='upload-img'/>
               <p>
-                Drag and drop your files here, or click to browse and paste
-                them!
+              Drop files here to upload, click to browse, or paste directly!
               </p>
             </div>
             <div id="progress-bar">
@@ -477,12 +508,21 @@ const Hero = () => {
               <div id="progress-bar-right">
                 <div id="progress-bar-content">
                   <h4>{fileMetadata?.fileName?.split('[$]')[0] || ''}</h4>
-                  <span>{progress > 0 && `${Math.floor(progress)}%`}</span>
+                  <span>
+                    {progress > 0 &&
+                      progress < 100 &&
+                      `${Math.floor(progress)}%`}
+                    {progress === 100 && (
+                      <img id="done" src={done} alt="Done" />
+                    )}
+                  </span>
                 </div>
                 <div id="progress-wrapper">
                   <div
                     id="progress-bar-status"
-                    style={{ width: `${progress}%`, backgroundColor: 'black' }}
+                    style={{
+                      width: `${progress}%`,
+                    }}
                   ></div>
                 </div>
               </div>
@@ -522,7 +562,43 @@ const Hero = () => {
                     className="delete-btn"
                     onClick={() => handleDelete(roomId, file)}
                   >
-                    Delete
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 69 14"
+                      className="svgIcon bin-top"
+                    >
+                      <g clipPath="url(#clip0_35_24)">
+                        <path
+                          fill="black"
+                          d="M20.8232 2.62734L19.9948 4.21304C19.8224 4.54309 19.4808 4.75 19.1085 4.75H4.92857C2.20246 4.75 0 6.87266 0 9.5C0 12.1273 2.20246 14.25 4.92857 14.25H64.0714C66.7975 14.25 69 12.1273 69 9.5C69 6.87266 66.7975 4.75 64.0714 4.75H49.8915C49.5192 4.75 49.1776 4.54309 49.0052 4.21305L48.1768 2.62734C47.3451 1.00938 45.6355 0 43.7719 0H25.2281C23.3645 0 21.6549 1.00938 20.8232 2.62734ZM64.0023 20.0648C64.0397 19.4882 63.5822 19 63.0044 19H5.99556C5.4178 19 4.96025 19.4882 4.99766 20.0648L8.19375 69.3203C8.44018 73.0758 11.6746 76 15.5712 76H53.4288C57.3254 76 60.5598 73.0758 60.8062 69.3203L64.0023 20.0648Z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_35_24">
+                          <rect fill="white" height="14" width="69"></rect>
+                        </clipPath>
+                      </defs>
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 69 57"
+                      className="svgIcon bin-bottom"
+                    >
+                      <g clipPath="url(#clip0_35_22)">
+                        <path
+                          fill="black"
+                          d="M20.8232 -16.3727L19.9948 -14.787C19.8224 -14.4569 19.4808 -14.25 19.1085 -14.25H4.92857C2.20246 -14.25 0 -12.1273 0 -9.5C0 -6.8727 2.20246 -4.75 4.92857 -4.75H64.0714C66.7975 -4.75 69 -6.8727 69 -9.5C69 -12.1273 66.7975 -14.25 64.0714 -14.25H49.8915C49.5192 -14.25 49.1776 -14.4569 49.0052 -14.787L48.1768 -16.3727C47.3451 -17.9906 45.6355 -19 43.7719 -19H25.2281C23.3645 -19 21.6549 -17.9906 20.8232 -16.3727ZM64.0023 1.0648C64.0397 0.4882 63.5822 0 63.0044 0H5.99556C5.4178 0 4.96025 0.4882 4.99766 1.0648L8.19375 50.3203C8.44018 54.0758 11.6746 57 15.5712 57H53.4288C57.3254 57 60.5598 54.0758 60.8062 50.3203L64.0023 1.0648Z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_35_22">
+                          <rect fill="white" height="57" width="69"></rect>
+                        </clipPath>
+                      </defs>
+                    </svg>
                   </button>
                 </div>
               ))}

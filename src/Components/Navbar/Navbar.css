@@ -153,7 +153,9 @@ font-size: 1rem;
   overflow: hidden;
   transition-duration: 0.4s;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(to right, #3498db, #e74c3c);
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+
+
 }
 
 .sign {
@@ -187,7 +189,9 @@ font-size: 1rem;
   width: 180px;
   border-radius: 20px;
   transition-duration: 0.4s;
-  background: linear-gradient(to right, #3498db, #e74c3c);
+  background: linear-gradient(to right, #FF5733, #FF0000);
+
+
 }
 
 .Btn:hover .sign {
@@ -196,6 +200,7 @@ font-size: 1rem;
 }
 
 .Btn:hover .text {
+  color: white;
   opacity: 1;
   width: 70%;
   transition-duration: 0.4s;

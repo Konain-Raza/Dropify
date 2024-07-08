@@ -6,6 +6,7 @@
   display: flex;
 }
 #hero-left {
+  overflow: hidden;
   width: 60%;
   height: 100%;
   display: flex;
@@ -42,29 +43,39 @@ h4 {
   width: 39rem;
   height: 38rem;
 }
-#droparea {
+
+#droparea {text-align: center;
+flex-direction: column;
+  display: flex;justify-content: center;align-items: center;
   border: 2px dashed #ccc;
+  border-radius: 15px;
   padding: 20px;
   width: 55%;
   height: 50%;
   cursor: pointer;
 }
+#droparea>p{
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+}
 #files-container {
-  width: 98%;
+  /* background-color: #0031F2; */
+  width: 98% !important;
   height: 65%;
   display: flex;
 }
 #uploadFiles {
     /* background-color: rebeccapurple; */
     height: 98%;
-  width: 60%;
+  width: 55%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2vh;
 }
 #downloadFiles {
-  width: 40%;
+  width: 45%;
   height: 90%;
   display: flex;
   padding: 8px;
@@ -72,14 +83,21 @@ h4 {
   gap: 1vh;
   align-items: center;
   justify-content: flex-start;
-
   overflow-y: auto; /* Enable scroll when content overflows */
   overflow-x: hidden;       
 }
 #downloadFiles::-webkit-scrollbar {
   display: none;
 }
-
+#drop-zone-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  display: none; /* Initially hidden */
+}
 .file {
   height: 3.5rem;
   display: flex;
@@ -88,7 +106,7 @@ h4 {
   padding: 10px; /* Add padding for spacing */
   background-color: #f0f0f0; /* Example background color */
   border-radius: 15px; /* Rounded corners for each file */
-  width: 100%; /* Adjust width as needed */
+  width: 90%; /* Adjust width as needed */
 }
 
 .fileicon {
@@ -105,10 +123,10 @@ h4 {
 }
 
 .download-btn {
-  width: 45px;
+  width: 50px;
   height: 40px;
-  border: 2px solid rgb(214, 214, 214);
-  border-radius: 15px;
+  border: 1px solid rgb(214, 214, 214);
+  border-radius: 10px;
   background-color: rgb(255, 255, 255);
   display: flex;
   flex-direction: column;
@@ -117,7 +135,7 @@ h4 {
   cursor: pointer;
   position: relative;
   transition-duration: 0.3s;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.11);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .svgIcon {
@@ -180,11 +198,14 @@ h4 {
   #progress-bar-right {
     width: calc(100% - 80px); /* Adjust width for right section */
     display: flex;
+    height: 100%;
     flex-direction: column;
+    align-items: flex-start;
   }
   
   #progress-bar-content {
     width: 100%;
+    height: 50%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -192,15 +213,12 @@ h4 {
   
   #progress-wrapper {
     width: 100%;
-    height: 10px; /* Adjust height of progress bar */
+    height: 50%; /* Adjust height of progress bar */
     background-color: #ddd; /* Adjust background color */
     margin-top: 5px; /* Adjust margin as needed */
   }
   
-  #progress-bar-status {
-    height: 100%;
-    background-color: #4caf50; /* Adjust progress bar color */
-  }
+
   
   /* tooltip settings 👇 */
 #createRoom{
@@ -220,7 +238,7 @@ h4 {
     gap: 1vw    ;
 }
 .copy {
-    /* button */
+    /* delete-btn */
     --button-bg: #353434;
     --button-hover-bg: #464646;
     --button-text-color: #CCCCCC;
@@ -342,9 +360,12 @@ h4 {
     font-size: 0.8rem;
     line-height: 1.5rem;
     padding: 0.5rem;
-    color: rgb(242 242 242);
+    color: white;
+    font-weight: bolder;
     background-color: rgb(79 70 229);
-    background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+    background: linear-gradient(144deg, #FFD700, #FFA500 50%, #FF6347);
+
+
     font-weight: 600;
     border-radius: 0.5rem;
     border-style: none;
@@ -356,7 +377,77 @@ h4 {
   }
   
   .create-btn:hover {
-    box-shadow: inset 0 5px 25px 0 #af40ff, inset 0 10px 15px 0px #5b42f3,
-      inset 0 5px 25px 0px #00ddeb;
+    box-shadow: inset 0 5px 25px 0 #FFD700, inset 0 10px 15px 0px #FFA500 ,
+      inset 0 5px 25px 0px #FF6347;
   }
   
+
+  .delete-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+    transition-duration: 0.3s;
+    overflow: hidden;
+    position: relative;
+    gap: 2px;
+  }
+  #progress-bar-status {
+    height: 1rem;
+    background: repeating-linear-gradient(45deg, #0031F2 0 30px, #006DFE 0 40px) right/200% 100%;
+    border-radius: 10px;
+    border: 1px solid #006DFE;
+  }
+
+  #progress-bar-content{
+
+  }
+  
+  #progress-bar-content>h4{
+    width: 100%;
+    height: 1.5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  #done{
+    margin-left: 1vw;
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .delete-btn>.svgIcon {
+    width: 12px;
+    transition-duration: 0.3s;
+  }
+  
+  .delete-btn>.svgIcon path {
+    fill: white;
+  }
+  
+  .delete-btn:hover {
+    transition-duration: 0.3s;
+    background-color: rgb(255, 69, 69);
+    align-items: center;
+    gap: 0;
+  }
+  
+  .bin-top {
+    transform-origin: bottom right;
+  }
+  .delete-btn:hover .bin-top {
+    transition-duration: 0.5s;
+    transform: rotate(160deg);
+  }
+  
+  #upload-img{
+    width: 4rem;
+    height: 4rem;
+  }
