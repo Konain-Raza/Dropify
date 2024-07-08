@@ -1,22 +1,22 @@
-nav{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 15%;
+nav {
+  /* display: none; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 15%;
 }
-#nav-right{
+#nav-right {
   width: max-content;
   height: 100%;
   display: flex;
   align-items: center;
   margin-right: 20px;
-
 }
 
 .input {
-  width: 10rem;
-  height: 45px;
+  width: 80%;
+  height: clamp(2rem, 1.9211rem + 1.2632vw, 3.5rem);
   line-height: 30px;
   padding: 0 0.5rem;
   padding-left: 1rem;
@@ -25,14 +25,15 @@ nav{
   outline: none;
   background-color: #f8fafc;
   color: #0d0c22;
-  transition: .5s ease;
+  transition: 0.5s ease;
 }
 
 .input::placeholder {
   color: #94a3b8;
 }
 
-.input:focus, input:hover {
+.input:focus,
+input:hover {
   outline: none;
   border-color: rgba(129, 140, 248);
   background-color: #fff;
@@ -46,116 +47,117 @@ nav{
   width: 1rem;
   height: 1rem;
 }
-#logo{
+#logo {
   margin-left: 2vw;
   width: max-content;
   height: 90%;
+  gap: 0.1rem;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+#logo > h1 {
+  font-size: clamp(1.3rem, 1.2474rem + 0.8421vw, 2.3rem);
+}
+#logo > img {
+  object-fit: contain;
+  width: clamp(2.5rem, 2.4211rem + 1.2632vw, 4rem);
+  height: clamp(2.5rem, 2.4211rem + 1.2632vw, 4rem);
+}
+#join-room {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   gap: 0.5rem;
+  width: max-content;
+  padding: 0 0.2rem;
+  height: 100%;
+}
+#joinRoom-btn {
+  font-family: inherit;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #ffd700, #ffa500);
+  color: white;
+  padding: 0.8rem;
+  /* width: 3rem; */
+
+  padding-left: 0.9em;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
+  font-weight: 1000;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.2s;
+  cursor: pointer;
+  transition: 1s ease;
 }
-#logo>h1{
-  font-size: 2rem;
+
+#joinRoom-btn span {
+  margin-left: 0.3em;
+  transition: all 0.3s ease-in-out;
 }
-#logo>img{
-  object-fit: contain;
-  width: 4rem;
-  height: 4rem;
+
+#joinRoom-btn svg {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
 }
-#join-room{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 0.5rem;
-    width: max-content;
-    padding: 0 1rem;
-    height: 100%;
+
+#joinRoom-btn:hover .svg-wrapper {
+  animation: fly-1 0.6s ease-in-out infinite alternate;
 }
-#joinRoom-btn {
-    font-family: inherit;
-    font-size: 1rem;
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    color: white;
-    padding: 0.7rem 1rem;
-    padding-left: 0.9em;
-    display: flex;
-    align-items: center;
-    border: none;
-    font-weight: 1000;
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.2s;
-    cursor: pointer;
-    transition: 1s ease;
+#joinRoom-btn:hover {
+  background: linear-gradient(135deg, #ffa500, #ffd700);
+}
+#joinRoom-btn:hover svg {
+  transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+#joinRoom-btn:hover span {
+  transform: translateX(5em);
+}
+
+#joinRoom-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
   }
-  
-  #joinRoom-btn span {
-    display: block;
-    margin-left: 0.3em;
-    transition: all 0.3s ease-in-out;
+
+  to {
+    transform: translateY(-0.1em);
   }
-  
-  #joinRoom-btn svg {
-    display: block;
-    transform-origin: center center;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  #joinRoom-btn:hover .svg-wrapper {
-    animation: fly-1 0.6s ease-in-out infinite alternate;
-  }
-  #joinRoom-btn:hover{
-  
-  background: linear-gradient(135deg, #FFA500, #FFD700);}
-  #joinRoom-btn:hover svg {
-    transform: translateX(1.2em) rotate(45deg) scale(1.1);
-  }
-  
-  #joinRoom-btn:hover span {
-    transform: translateX(5em);
-  }
-  
-  #joinRoom-btn:active {
-    transform: scale(0.95);
-  }
-  
-  @keyframes fly-1 {
-    from {
-      transform: translateY(0.1em);
-    }
-  
-    to {
-      transform: translateY(-0.1em);
-    }
-  }
-  
-#roomId{
-    background-color: none;
-    padding: 0.7rem 1rem;
-font-size: 1rem;
-    outline: none;
-    border: 1px solid black;
-    border-radius: 10px;
+}
+
+#roomId {
+  background-color: none;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 .Btn {
-
   display: flex;
   gap: 0px;
   align-items: center;
-  justify-content: flex-start;
-  width: 50px;
-  height: 50px;
+
+  /* justify-content: flex-start; */
+  width: clamp(2.3875rem, 1.3156rem + 3.75vw, 3.125rem);
+  height: clamp(2.3875rem, 1.3156rem + 3.75vw, 3.125rem);
   border: none;
-  border-radius: 15px;
+  margin-right: 10px;
+  border-radius: 8px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition-duration: 0.4s;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(135deg, #FFD700, #FFA500);
-
-
+  background: linear-gradient(135deg, #ffd700, #ffa500);
 }
 
 .sign {
@@ -187,11 +189,9 @@ font-size: 1rem;
 
 .Btn:hover {
   width: 180px;
-  border-radius: 20px;
+  border-radius: 10px;
   transition-duration: 0.4s;
-  background: linear-gradient(to right, #FF5733, #FF0000);
-
-
+  background: linear-gradient(to right, #ff5733, #ff0000);
 }
 
 .Btn:hover .sign {
@@ -209,4 +209,79 @@ font-size: 1rem;
 .Btn:active {
   transform: translate(2px, 2px);
   box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+}
+@media only screen and (max-width: 400px) {
+  .Btn {
+    justify-content: center;
+  }
+
+  .Btn:hover {
+    width: 100px;
+    border-radius: 10px;
+    transition-duration: 0.4s;
+    background: linear-gradient(to right, #ff5733, #ff0000);
+    .text {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  nav {
+    height: max-content;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #joinRoom-btn span {
+    display: none;
+  }
+  #join-room {
+    margin: auto;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    /* padding: 0 1rem; */
+    height: 50%;
+  }
+  #nav-right {
+    margin: auto;
+    display: flex;
+    width: 100%;
+    height: max-content;
+    align-items: center;
+  }
+  #joinRoom-btn {
+    padding: 0.4rem;
+    /* width: 3rem; */
+
+    padding-left: 0.5em;
+  }
+  #joinRoom-btn:hover .svg-wrapper {
+    animation: none;
+  }
+  #joinRoom-btn span {
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+  }
+
+  #joinRoom-btn svg {
+    display: block;
+    /* transform-origin: center center; */
+    transition: transform 0.3s ease-in-out;
+  }
+
+  #joinRoom-btn:hover {
+    background: linear-gradient(135deg, #ffa500, #ffd700);
+  }
+  #joinRoom-btn:hover svg {
+    transform: none;
+  }
+
+  #joinRoom-btn:hover span {
+    transform: none;
+  }
+
+  #joinRoom-btn:active {
+    transform: scale(0.95);
+  }
 }

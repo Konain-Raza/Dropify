@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import icon from '../../assets/Images/icon.png';
+import { toast } from 'react-toastify';
+
 import './Navbar.css';
 
 const Navbar = () => {
@@ -32,7 +34,7 @@ const Navbar = () => {
 
      
 
-     <div id="nav-right"> <form id="join-room" onSubmit={joinRoom}>
+     <div id="nav-right">   <form id="join-room" onSubmit={joinRoom}>
         <div className="group">
           <input
             type="text"

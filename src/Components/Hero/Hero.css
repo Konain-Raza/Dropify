@@ -1,27 +1,31 @@
 #hero {
+  position: relative;
+
   font-family: Gilroy;
   overflow: hidden;
   width: 100%;
-  height: 85%;
+  height: max-content;
   display: flex;
+  flex-direction: column;
 }
 #hero-left {
   overflow: hidden;
-  width: 60%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 #hero-content {
+  /* background-color: red; */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 90%;
-  height: 35%;
+  width: 45%;
+  height: 50%;
 }
 #hero-content > h1 {
-  font-size: 4rem;
+  font-size: clamp(1.2rem, 0.9474rem + 4.0421vw, 6rem);
 }
 #hero-content > h1,
 h3,
@@ -29,7 +33,39 @@ h4 {
   margin: 0;
   padding: 0;
 }
-
+#star{
+  background-color: transparent;
+  mix-blend-mode: color-burn;
+  position: absolute;
+  width: clamp(10rem, 5.3333rem + 9.3333vw, 17rem);
+  /* width: clamp(12rem, 8.6667rem + 6.6667vw, 17rem); */
+top: 0rem;
+right: 50%;
+}
+#hero-content > h3 {
+  width: 100%;
+  line-height: 1rem;
+  font-size: clamp(0.8rem, 0.7368rem + 1.0105vw, 2rem);
+  margin-bottom: 1vh;
+}
+#hero-content > h4 {
+  width: 100%;
+  color: rgba(0, 0, 0, 0.829);
+  /* color: red; */
+  font-weight: 10;
+  line-height:clamp(0.8rem, 0.7474rem + 0.8421vw, 1.8rem);
+  font-size: clamp(0.7rem, 0.6579rem + 0.6737vw, 1.5rem);
+}
+#room-id {
+  display: flex;
+  gap: 0.2rem;
+  /* width: 6rem; */
+}
+#room-id > h4 {
+  margin: 0;
+  padding: 0;
+  font-size: clamp(0.6rem, 0.5526rem + 0.7579vw, 1.5rem);
+}
 #hero-right {
   display: flex;
   align-items: center;
@@ -38,43 +74,48 @@ h4 {
   height: 100%;
   object-fit: cover;
 }
-#hero-right > img {
+#hero-img {
   padding: 0%;
-  width: 39rem;
-  height: 38rem;
+  width: clamp(18rem, 16.8947rem + 17.6842vw, 39rem);
+  height: clamp(18rem, 16.8947rem + 17.6842vw, 39rem);
 }
 
-#droparea {text-align: center;
-flex-direction: column;
-  display: flex;justify-content: center;align-items: center;
+#droparea {
+  text-align: center;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 2px dashed #ccc;
   border-radius: 15px;
   padding: 20px;
   width: 55%;
-  height: 50%;
+  height: 60%;
   cursor: pointer;
 }
-#droparea>p{
+#droparea > p {
   margin: 0;
   padding: 0;
-  font-size: 0.8rem;
+  font-size: clamp(0.6rem, 0.5368rem + 1.0105vw, 1.8rem);
 }
 #files-container {
-  /* background-color: #0031F2; */
   width: 98% !important;
-  height: 65%;
+  height: 90vh;
   display: flex;
 }
 #uploadFiles {
-    /* background-color: rebeccapurple; */
-    height: 98%;
+  margin: auto;
+  height: 100%;
   width: 55%;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
   gap: 2vh;
 }
 #downloadFiles {
+  margin: auto;
+  cursor: pointer;
   width: 45%;
   height: 90%;
   display: flex;
@@ -84,7 +125,7 @@ flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   overflow-y: auto; /* Enable scroll when content overflows */
-  overflow-x: hidden;       
+  overflow-x: hidden;
 }
 #downloadFiles::-webkit-scrollbar {
   display: none;
@@ -104,31 +145,57 @@ flex-direction: column;
   gap: 0.3vw;
   align-items: center;
   padding: 10px; /* Add padding for spacing */
-  background-color: #f0f0f0; /* Example background color */
+  background-color: white; /* Example background color */
   border-radius: 15px; /* Rounded corners for each file */
   width: 90%; /* Adjust width as needed */
 }
 
 .fileicon {
-  width: 50px; /* Adjust icon size */
-  height: 50px;
+  width: 3rem;
+  height: 3rem;
 }
+#filename-status{
+  /* background-color: rebeccapurple; */
+  display: flex;
+  margin: auto;
+  align-items: center;justify-content: space-between;
+  width: 100%;
 
-.filename {
-  width: 70%;
-  height: 40%;
+  height:50%;
+}
+.filename>h4{
+  margin: auto;
+  /* display: flex; */
+
+
+  width: 100%;
+  /* height: 50% ; */
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 1.1rem; /* Adjust font size */
+  /* font-size: clamp(0.7rem, 0.6526rem + 0.7579vw, 1.6rem); */
+}
+.filename {
+  margin: auto;
+  display: flex;
+ flex-wrap: wrap;
+  
+  flex-direction: column;
+ justify-content: flex-start;
+
+  width: 80%;
+  height: 60% ;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: clamp(0.7rem, 0.6526rem + 0.7579vw, 1.6rem);
 }
 
 .download-btn {
-  width: 50px;
-  height: 40px;
+  padding: 0.7rem 0.6rem;
   border: 1px solid rgb(214, 214, 214);
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
   display: flex;
+  margin-right: 2px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -139,12 +206,14 @@ flex-direction: column;
 }
 
 .svgIcon {
+  width: 18px;
+  height: 11px;
   fill: rgb(70, 70, 70);
 }
 
 .icon2 {
-  width: 18px;
-  height: 5px;
+  width: 8px;
+  height: 1px;
   border-bottom: 2px solid rgb(70, 70, 70);
   border-left: 2px solid rgb(70, 70, 70);
   border-right: 2px solid rgb(70, 70, 70);
@@ -178,276 +247,328 @@ flex-direction: column;
   }
 }
 #progress-bar {
-    margin: 0 auto;
-    width: 85%;
-    height: 4rem; /* Adjust height as needed */
-    display: none;
-    align-items: center;
-    border-radius: 10px;
-    background-color: #f0f0f0; /* Adjust background color */
-    padding: 5px;
-    margin-bottom: 20px; /* Adjust margin as needed */
-  }
-  
-  .file-icon {
-    width: 60px; /* Adjust icon size */
-    height: auto;
-    margin-right: 20px; /* Adjust margin as needed */
-  }
-  
-  #progress-bar-right {
-    width: calc(100% - 80px); /* Adjust width for right section */
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  #progress-bar-content {
-    width: 100%;
-    height: 50%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  #progress-wrapper {
-    width: 100%;
-    height: 50%; /* Adjust height of progress bar */
-    background-color: #ddd; /* Adjust background color */
-    margin-top: 5px; /* Adjust margin as needed */
-  }
-  
-
-  
-  /* tooltip settings 👇 */
-#createRoom{
-    width: 90%;
-    height: 10%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* background-color: red; */
+  opacity: 0;
+  margin: 0 auto;
+  width: 85%;
+  height: 4rem; /* Adjust height as needed */
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
+  margin-bottom: 20px; /* Adjust margin as needed */
 }
-#createRoom-btns{
-    width: max-content;
-    height: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 1vw    ;
+
+.file-icon {
+  width: 60px; /* Adjust icon size */
+  height: auto;
+  margin-right: 20px; /* Adjust margin as needed */
+}
+
+#progress-bar-right {
+  width: calc(100% - 80px); /* Adjust width for right section */
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#progress-bar-content {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#progress-wrapper {
+  display: flex;
+  width: 100%;
+  height: 50%; /* Adjust height of progress bar */
+  margin-top: 5px; /* Adjust margin as needed */
+}
+
+/* tooltip settings 👇 */
+#createRoom {
+  width: 90%;
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: red; */
+}
+#createRoom > h4 {
+  font-size: clamp(0.7rem, 0.6842rem + 0.2526vw, 1rem);
+}
+#createRoom-btns {
+  width: max-content;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1vw;
 }
 .copy {
-    /* delete-btn */
-    --button-bg: #353434;
-    --button-hover-bg: #464646;
-    --button-text-color: #CCCCCC;
-    --button-hover-text-color: #8bb9fe;
-    --button-border-radius: 10px;
-    --button-diameter: 36px;
-    --button-outline-width: 1px;
-    --button-outline-color: rgb(141, 141, 141);
-    /* tooltip */
-    --tooltip-bg: #f4f3f3;
-    --toolptip-border-radius: 4px;
-    --tooltip-font-family: Menlo, Roboto Mono, monospace;
-    /* 👆 this field should not be empty */
-    --tooltip-font-size: 12px;
-    /* 👆 this field should not be empty */
-    --tootip-text-color: rgb(50, 50, 50);
-    --tooltip-padding-x: 7px;
-    --tooltip-padding-y: 7px;
-    --tooltip-offset: 8px;
-    /* --tooltip-transition-duration: 0.3s; */
-    /* 👆 if you need a transition, 
-    just remove the comment,
-    but I didn't like the transition :| */
-  }
-  
-  .copy {
-    box-sizing: border-box;
-    width: var(--button-diameter);
-    height: var(--button-diameter);
-    border-radius: var(--button-border-radius);
-    background-color: var(--button-bg);
-    color: var(--button-text-color);
-    border: none;
-    cursor: pointer;
-    position: relative;
-    outline: none;
-  }
-  
-  .tooltip {
-    position: absolute;
-    opacity: 0;
-    visibility: 0;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    font: var(--tooltip-font-size) var(--tooltip-font-family);
-    color: var(--tootip-text-color);
-    background: var(--tooltip-bg);
-    padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
-    border-radius: var(--toolptip-border-radius);
-    pointer-events: none;
-    transition: all var(--tooltip-transition-duration) cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-  
-  .tooltip::before {
-    content: attr(data-text-initial);
-  }
-  
-  .tooltip::after {
-    content: "";
-    position: absolute;
-    bottom: calc(var(--tooltip-padding-y) / 2 * -1);
-    width: var(--tooltip-padding-y);
-    height: var(--tooltip-padding-y);
-    background: inherit;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    z-index: -999;
-    pointer-events: none;
-  }
-  
-  .copy svg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  .checkmark {
-    display: none;
-  }
-  
-  /* actions */
-  
-  .copy:hover .tooltip,
-  .copy:focus:not(:focus-visible) .tooltip {
-    opacity: 1;
-    visibility: visible;
-    top: calc((100% + var(--tooltip-offset)) * -1);
-  }
-  
-  .copy:focus:not(:focus-visible) .tooltip::before {
-    content: attr(data-text-end);
-  }
-  
-  .copy:focus:not(:focus-visible) .clipboard {
-    display: none;
-  }
-  
-  .copy:focus:not(:focus-visible) .checkmark {
-    display: block;
-  }
-  
-  .copy:hover,
-  .copy:focus {
-    background-color: var(--button-hover-bg);
-  }
-  
-  .copy:active {
-    outline: var(--button-outline-width) solid var(--button-outline-color);
-  }
-  
-  .copy:hover svg {
-    color: var(--button-hover-text-color);
-  }
-  .create-btn {
-    cursor: pointer;
-    font-size: 0.8rem;
-    line-height: 1.5rem;
-    padding: 0.5rem;
-    color: white;
-    font-weight: bolder;
-    background-color: rgb(79 70 229);
-    background: linear-gradient(144deg, #FFD700, #FFA500 50%, #FF6347);
+  /* delete-btn */
+  --button-bg: #353434;
+  --button-hover-bg: #464646;
+  --button-text-color: #cccccc;
+  --button-hover-text-color: #8bb9fe;
+  --button-border-radius: 10px;
+  --button-diameter:  clamp(2.4rem, 2.3474rem + 0.8421vw, 3.4rem);
+  --button-outline-width: 1px;
+  --button-outline-color: rgb(141, 141, 141);
+  /* tooltip */
+  --tooltip-bg: #f4f3f3;
+  --toolptip-border-radius: 4px;
+  --tooltip-font-family: Menlo, Roboto Mono, monospace;
+  /* 👆 this field should not be empty */
+  --tooltip-font-size: 12px;
 
+  --tootip-text-color: rgb(50, 50, 50);
+  --tooltip-padding-x: 7px;
+  --tooltip-padding-y: 7px;
+  --tooltip-offset: 8px;
+}
+#hero-banner {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.copy {
+  box-sizing: border-box;
+  width: var(--button-diameter);
+  height: var(--button-diameter);
+  border-radius: var(--button-border-radius);
+  background-color: var(--button-bg);
+  color: var(--button-text-color);
+  border: none;
+  cursor: pointer;
+  padding: clamp(0.5rem, 0.4526rem + 0.7579vw, 1.4rem);
 
-    font-weight: 600;
-    border-radius: 0.5rem;
-    border-style: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.2rem;
-    transition: all 0.35s linear;
-  }
-  
-  .create-btn:hover {
-    box-shadow: inset 0 5px 25px 0 #FFD700, inset 0 10px 15px 0px #FFA500 ,
-      inset 0 5px 25px 0px #FF6347;
-  }
-  
+  position: relative;
+  outline: none;
+}
 
-  .delete-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background-color: rgb(20, 20, 20);
-    border: none;
-    font-weight: 600;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
-    cursor: pointer;
-    transition-duration: 0.3s;
-    overflow: hidden;
-    position: relative;
-    gap: 2px;
-  }
-  #progress-bar-status {
-    height: 1rem;
-    background: repeating-linear-gradient(45deg, #0031F2 0 30px, #006DFE 0 40px) right/200% 100%;
-    border-radius: 10px;
-    border: 1px solid #006DFE;
-  }
+.tooltip {
+  position: absolute;
+  opacity: 0;
+  visibility: 0;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font: var(--tooltip-font-size) var(--tooltip-font-family);
+  color: var(--tootip-text-color);
+  background: var(--tooltip-bg);
+  padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
+  border-radius: var(--toolptip-border-radius);
+  pointer-events: none;
+  transition: all var(--tooltip-transition-duration)
+    cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
 
-  #progress-bar-content{
+.tooltip::before {
+  content: attr(data-text-initial);
+}
 
-  }
-  
-  #progress-bar-content>h4{
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: calc(var(--tooltip-padding-y) / 2 * -1);
+  width: var(--tooltip-padding-y);
+  height: var(--tooltip-padding-y);
+  background: inherit;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  z-index: -999;
+  pointer-events: none;
+}
+
+.copy svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.checkmark {
+  display: none;
+}
+
+/* actions */
+
+.copy:hover .tooltip,
+.copy:focus:not(:focus-visible) .tooltip {
+  opacity: 1;
+  visibility: visible;
+  top: calc((100% + var(--tooltip-offset)) * -1);
+}
+
+.copy:focus:not(:focus-visible) .tooltip::before {
+  content: attr(data-text-end);
+}
+
+.copy:focus:not(:focus-visible) .clipboard {
+  display: none;
+}
+
+.copy:focus:not(:focus-visible) .checkmark {
+  display: block;
+}
+
+.copy:hover,
+.copy:focus {
+  background-color: var(--button-hover-bg);
+}
+
+.copy:active {
+  outline: var(--button-outline-width) solid var(--button-outline-color);
+}
+
+.copy:hover svg {
+  color: var(--button-hover-text-color);
+}
+.create-btn {
+  cursor: pointer;
+  font-size: clamp(0.6rem, 0.5579rem + 0.6737vw, 1.4rem);
+  line-height: 0.7rem;
+
+  padding: clamp(0.5rem, 0.4526rem + 0.7579vw, 1.4rem);
+  color: white;
+  font-weight: bolder;
+  background-color: rgb(79 70 229);
+  background: linear-gradient(144deg, #ffd700, #ffa500 50%, #ff6347);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* gap: 0.2rem; */
+  transition: all 0.35s linear;
+}
+
+.create-btn:hover {
+  box-shadow: inset 0 5px 25px 0 #ffd700, inset 0 10px 15px 0px #ffa500,
+    inset 0 5px 25px 0px #ff6347;
+}
+
+.delete-btn {
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  gap: 0px;
+}
+#progress-bar-status {
+  height: 1rem;
+  background: repeating-linear-gradient(45deg, #0031f2 0 30px, #006dfe 0 40px)
+    right/200% 100%;
+  border-radius: 10px;
+  border: 1px solid #006dfe;
+}
+
+#done {
+  margin-top: 1vh;
+  margin-left: 1vw;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+.delete-btn > .svgIcon {
+  width: 15px;
+  transition-duration: 0.3s;
+}
+
+.delete-btn > .svgIcon path {
+  fill: white;
+}
+
+.delete-btn:hover {
+  transition-duration: 0.3s;
+  background-color: rgb(255, 69, 69);
+  align-items: center;
+  gap: 0;
+}
+
+.bin-top {
+  transform-origin: bottom right;
+}
+.delete-btn:hover .bin-top {
+  transition-duration: 0.5s;
+  transform: rotate(160deg);
+}
+
+#upload-img {
+  width: clamp(4rem, 3.8421rem + 2.5263vw, 7rem);
+  height: clamp(4rem, 3.8421rem + 2.5263vw, 7rem);
+}
+@media only screen and (max-width: 800px) {
+  #hero-banner {
+    /* background-color: #006dfe; */
+    justify-content: flex-start;
+    gap: 5vh;
+    height: max-content;
     width: 100%;
-    height: 1.5rem;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    flex-direction: column;
+  }
+  #hero-img {
+    height: clamp(10rem, 6.3636rem + 58.1818vw, 50rem);
+    width: clamp(10rem, 6.3636rem + 58.1818vw, 50rem);
+  }
+  #hero {
+    width: 100%;
+    height: max-content;
   }
 
-  #done{
-    margin-left: 1vw;
-    width: 1.6rem;
-    height: 1.6rem;
+  #files-container {
+    margin: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: max-content;
   }
-  .delete-btn>.svgIcon {
-    width: 12px;
-    transition-duration: 0.3s;
+  #hero-content {
+    /* background-color: red; */
+    justify-content: center;
+    margin-top: 5vh;
+    width: 90%;
+    height: max-content;
   }
-  
-  .delete-btn>.svgIcon path {
-    fill: white;
+  #star{
+    display: none;
   }
-  
-  .delete-btn:hover {
-    transition-duration: 0.3s;
-    background-color: rgb(255, 69, 69);
+  #uploadFiles {
+    justify-content: center;
+    /* background-color: purple; */
     align-items: center;
-    gap: 0;
+    height: 27rem;
+    width: 100%;
   }
-  
-  .bin-top {
-    transform-origin: bottom right;
+  #downloadFiles {
+    width: 95%;
+    height: 90%;
   }
-  .delete-btn:hover .bin-top {
-    transition-duration: 0.5s;
-    transform: rotate(160deg);
+  #droparea {
+    width: 60%;
+    height: clamp(10rem, 9.4737rem + 8.4211vw, 20rem);
   }
-  
-  #upload-img{
-    width: 4rem;
-    height: 4rem;
+}
+@media only screen and (max-width: 350px) {
+  #room-id {
+    flex-direction: column;
   }
+}
