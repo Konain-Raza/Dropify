@@ -188,26 +188,26 @@ const Hero = () => {
     }
   };
 
-  const handleFile = (selectedFile) => {
-    if (roomId) {
-      if (selectedFile && selectedFile.size / (1024 * 1024) <= 3) {
-        setFile(selectedFile);
-        const newFileMetadata = {
-          fileName: generateFileName(selectedFile.name),
-          fileSize: (selectedFile.size / (1024 * 1024)).toFixed(2),
-          fileType: selectedFile.type.split('/')[1],
-          createdAt: new Date(),
-        };
-        setFileMetadata(newFileMetadata);
+    const handleFile = (selectedFile) => {
+      if (roomId) {
+        if (selectedFile && selectedFile.size / (1024 * 1024) <= 3) {
+          setFile(selectedFile);
+          const newFileMetadata = {
+            fileName: generateFileName(selectedFile.name),
+            fileSize: (selectedFile.size / (1024 * 1024)).toFixed(2),
+            fileType: selectedFile.type.split('/')[1],
+            createdAt: new Date(),
+          };
+          setFileMetadata(newFileMetadata);
+        } else {
+          toast.error('File size exceeds 3 MB or no file selected.');
+          setFile(null);
+        }
       } else {
-        toast.error('File size exceeds 3 MB or no file selected.');
+        toast.error('You need to join a room to upload files.');
         setFile(null);
       }
-    } else {
-      toast.error('You need to join a room to upload files.');
-      setFile(null);
-    }
-  };
+    };
   const handleDelete = async (roomId, file) => {
     try {
       const storageRef = ref(storage, file.url);
@@ -243,13 +243,14 @@ const Hero = () => {
     }
 
     const handlePaste = (e) => {
-      const clipboardFile = e.clipboardData.items[0].getAsFile();
-      if (clipboardFile && clipboardFile.size / (1024 * 1024) <= 3) {
+      const clipboardFile = e.clipboardData.items[0]?.getAsFile();
+      if (clipboardFile instanceof File && clipboardFile.size / (1024 * 1024) <= 3) {
         handleFile(clipboardFile);
-      } else {
-        toast.error('File size exceeds 3 MB or no file pasted.');
+      } else if (clipboardFile instanceof File) {
+        toast.error('File size exceeds 3 MB.');
       }
     };
+    
 
     window.addEventListener('cookieChange', handleCookieChange);
     window.addEventListener('paste', handlePaste);
