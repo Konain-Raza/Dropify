@@ -44,7 +44,7 @@ right: 50%;
 }
 #hero-content > h3 {
   width: 100%;
-  line-height: 1rem;
+  line-height: 1.2rem;
   font-size: clamp(0.8rem, 0.7368rem + 1.0105vw, 2rem);
   margin-bottom: 1vh;
 }
@@ -568,6 +568,7 @@ right: 50%;
   }
 }
 @media only screen and (max-width: 350px) {
+  
   #room-id {
     flex-direction: column;
   }

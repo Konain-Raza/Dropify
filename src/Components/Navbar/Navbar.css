@@ -1,10 +1,11 @@
 nav {
+  margin: auto;
   /* display: none; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 15%;
+  width: 95%;
+  height: 20%;
 }
 #nav-right {
   width: max-content;
@@ -228,6 +229,10 @@ input:hover {
 }
 
 @media only screen and (max-width: 550px) {
+.group{
+  width: 100%;
+}
+
   nav {
     height: max-content;
     flex-direction: column;
@@ -252,7 +257,7 @@ input:hover {
     align-items: center;
   }
   #joinRoom-btn {
-    padding: 0.4rem;
+    padding: 0.5rem;
     /* width: 3rem; */
 
     padding-left: 0.5em;
